@@ -1,0 +1,10 @@
+Package: ws.hbang.aptdate
+Name: Aptdate
+Pre-Depends: firmware (>= 5.0)
+Depends: mobilesubstrate, coreutils, aptitude, preferenceloader, com.chpwn.weeloader
+Version: 1.2~beta1
+Architecture: iphoneos-arm
+Description: Get notifications when updates are available in Cydia!
+Maintainer: thekirbylover
+Author: thekirbylover
+Section: Tweaks

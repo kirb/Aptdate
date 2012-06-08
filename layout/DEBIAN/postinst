@@ -1,0 +1,4 @@
+#!/bin/bash
+chmod root:root /System/Library/LaunchDaemons/ws.hbang.aptdated.plist
+launchctl load /System/Library/LaunchDaemons/ws.hbang.aptdated.plist
+exit 0

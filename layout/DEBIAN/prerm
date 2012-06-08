@@ -1,0 +1,3 @@
+#!/bin/bash
+launchctl unload /System/Library/LaunchDaemons/ws.hbang.aptdated.plist
+exit 0
