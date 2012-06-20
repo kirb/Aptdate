@@ -1,5 +1,5 @@
 /**
- * Aptdate - Cydia database auto-updater with notifications
+ * Aptdate - Cydia package update notifications
  *
  * By Ad@m <http://adam.hbang.ws>
  * Licensed under the GNU GPL <http://gnu.org/copyleft/gpl.html>
@@ -136,6 +136,14 @@ static ADAPProvider *sharedProvider;
 }
 @end
 
+%hook BBServer
+-(void)_loadAllDataProviderPluginBundles{
+	%orig;
+	ADAPProvider *prov=[[ADAPProvider alloc]init];
+	[self _addDataProvider:prov sortSectionsNow:YES];
+	[prov release];
+}
+%end
 %hook SBUIController
 -(void)finishedUnscattering{
 	%orig;
