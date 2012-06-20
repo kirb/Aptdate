@@ -11,7 +11,7 @@
   <key>RunAtLoad</key>
   <false/>
   <key>StartInterval</key>
-  <integer>7200</integer>
+  <integer>18000</integer>
   <key>UserName</key>
   <string>mobile</string>
   <key>StandardErrorPath</key>

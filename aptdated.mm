@@ -110,6 +110,10 @@ static NSAutoreleasePool *p;
 int main(int argc,char **argv,char **envp){
 	p=[[NSAutoreleasePool alloc]init];
 	data=[[NSMutableArray alloc]init];
+	/*NSDictionary *prefs=[NSDictionary dictionaryWithContentsOfFile:prefpath]?:[NSDictionary dictionary];
+	int interval=[prefs objectForKey:@"Interval"]?[[prefs objectForKey:@"Interval"]intValue]:360; //intification.
+	if([NSDate date]//meh, screw this
+	[prefs release];*/
 	NSDateFormatter *format=[[NSDateFormatter alloc]init];
 	[format setDateFormat:@"dd/MM/yy HH:mm:ss zzz"];
 	printf("Update check initiated at %s\n",[[format stringFromDate:[NSDate date]]UTF8String]);

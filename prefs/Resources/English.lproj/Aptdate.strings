@@ -1,0 +1,10 @@
+"BANNER_SUBTITLE" = "Version %@";
+"BANNER_TEXT" = "An update for %@ is available.";
+"PREFS_AUTHOR" = "By Ad@m";
+"PREFS_CHECK_EVERY" = "Check Every";
+"PREFS_ENABLED" = "Enabled";
+"PREFS_FIVE_HOURS" = "5 Hours";
+"PREFS_NC" = "Use the Notifications settings page to change settings for Cydia notifications.";
+"PREFS_TWITTER" = "Follow me on Twitter";
+"PREFS_VERSION" = "Aptdate Version 1.1.1";
+"PREFS_UPDATE"="The ability to change the update check interval is coming in the next version.";
