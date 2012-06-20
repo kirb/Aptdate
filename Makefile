@@ -8,9 +8,9 @@ Aptdate_PRIVATE_FRAMEWORKS = AppSupport BulletinBoard
 Aptdate_INSTALL_PATH = /Library/WeeLoader/BulletinBoardPlugins
 THEOS_IPHONEOS_DEPLOYMENT_VERSION = 5.0
 
-AptdateStats_FILES = Widget.mm
-AptdateStats_INSTALL_PATH = /Library/WeeLoader/Plugins
-AptdateStats_FRAMEWORKS = UIKit CoreGraphics
+#AptdateStats_FILES = Widget.mm
+#AptdateStats_INSTALL_PATH = /Library/WeeLoader/Plugins
+#AptdateStats_FRAMEWORKS = UIKit CoreGraphics
 
 TOOL_NAME = aptdated
 aptdated_FILES = aptdated.mm

@@ -11,7 +11,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "BulletinBoard/BulletinBoard.h"
 #define prefpath @"/var/mobile/Library/Preferences/ws.hbang.aptdate.plist"
-#define alerttxt @"Cydia"
+#define alerttxt @"Aptdate"
 #define alertver @"Version %@"
 #define alertmsg @"An update for %@ is available."
 #define alertsnd @"/System/Library/Audio/UISounds/SIMToolkitPositiveACK.caf"
@@ -135,7 +135,7 @@ static ADAPProvider *sharedProvider;
 }
 @end
 
-/*%hook SBUIController
+%hook SBUIController
 -(void)finishedUnscattering{
 	%orig;
 	if(firstRun){
@@ -144,7 +144,7 @@ static ADAPProvider *sharedProvider;
 	}
 	if(pendingAlert) ADAPShowPending();
 }
-%end*/
+%end
 
 static void ADAPShowPending(){
 	if(pendingAlert){

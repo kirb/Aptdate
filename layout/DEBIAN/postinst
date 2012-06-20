@@ -1,4 +1,5 @@
 #!/bin/bash
-chmod root:root /System/Library/LaunchDaemons/ws.hbang.aptdated.plist
+chmod 644 /System/Library/LaunchDaemons/ws.hbang.aptdated.plist
+chown root:wheel /System/Library/LaunchDaemons/ws.hbang.aptdated.plist
 launchctl load /System/Library/LaunchDaemons/ws.hbang.aptdated.plist
 exit 0

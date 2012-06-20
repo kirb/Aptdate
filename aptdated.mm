@@ -121,7 +121,7 @@ int main(int argc,char **argv,char **envp){
 	}*/
 	if(argc>1&&strcmp(argv[1],"--dry-run")==0){
 		printf("Dry run mode activated\n\n");
-		[[CPDistributedMessagingCenter centerNamed:@"ws.hbang.aptdate.server"]sendMessageAndReceiveReplyName:@"aptdatenotify" userInfo:[NSDictionary dictionaryWithObject:[NSArray arrayWithObject:[NSArray arrayWithObjects:@"ws.hbang.aptdate",@"1.2",@"Aptdate"]] forKey:@"data"]];
+		[[CPDistributedMessagingCenter centerNamed:@"ws.hbang.aptdate.server"]sendMessageAndReceiveReplyName:@"aptdatenotify" userInfo:[NSDictionary dictionaryWithObject:[NSArray arrayWithObject:[NSArray arrayWithObjects:@"ws.hbang.aptdate",@"1.2",@"Aptdate",nil]] forKey:@"data"]];
 	}else{
 		printf("Downloading list from CydiaUpdates...\n");
 		NSXMLParser *rss=[[NSXMLParser alloc]initWithContentsOfURL:[NSURL URLWithString:@"http://feeds.feedburner.com/CydiaupdatesAllSections?format=xml"]];
