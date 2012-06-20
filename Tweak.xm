@@ -16,6 +16,7 @@
 #define alertmsg @"An update for %@ is available."
 #define alertsnd @"/System/Library/Audio/UISounds/SIMToolkitPositiveACK.caf"
 #define cydiaurl @"cydia://package/%@"
+#define __(key) [[NSBundle bundleWithPath:@"/Library/PreferenceBundles/Aptdate.bundle"]localizedStringForKey:key value:key table:@"Aptdate"]
 static BOOL enabled=YES;
 static BOOL limitSB=NO;
 static NSMutableDictionary *known=[[[NSMutableDictionary alloc]init]retain];
