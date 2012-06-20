@@ -76,9 +76,7 @@ static NSAutoreleasePool *p;
 		NSDictionary *j;
 		while((j=[enu nextObject])){
 			if(err==NULL){
-				if(![j objectForKey:@"title"]||![j objectForKey:@"feedburner:origLink"]){
-					continue;
-				}
+				if(![j objectForKey:@"title"]||![j objectForKey:@"feedburner:origLink"])continue;
 				results=[titleRegex matchesInString:[j objectForKey:@"title"] options:0 range:NSMakeRange(0,[[j objectForKey:@"title"]length])];
 				for(NSTextCheckingResult *result in results){
 					title=[[j objectForKey:@"title"]substringWithRange:[result rangeAtIndex:1]];
