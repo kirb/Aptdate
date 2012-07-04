@@ -41,6 +41,7 @@ static void ADAPShowPending();
 __attribute__((visibility("hidden")))
 @interface ADAPProvider:NSObject<BBDataProvider>
 -(NSDictionary *)handleAptdate:(NSString *)name withInfo:(NSDictionary *)info;
+-(void)_handleAptdate:(NSDictionary *)info;
 @end
 @implementation ADAPProvider
 static ADAPProvider *sharedProvider;
