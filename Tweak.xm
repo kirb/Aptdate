@@ -18,14 +18,12 @@
 #define cydiaurl @"cydia://package/%@"
 #define __(key) [[NSBundle bundleWithPath:@"/Library/PreferenceBundles/Aptdate.bundle"]localizedStringForKey:key value:key table:@"Aptdate"]
 static BOOL enabled=YES;
-static BOOL limitSB=NO;
 static NSMutableDictionary *known=[[[NSMutableDictionary alloc]init]retain];
-static int pendingAlert=0;
+static BOOL pendingAlert=YES;
 static NSString *pendingName;
 static NSString *pendingBundle;
 static NSString *pendingVersion;
 static BOOL firstRun=NO;
-static void ADAPShowPending();
 
 @interface SBBulletinBannerItem:NSObject
 +(SBBulletinBannerItem *)itemWithBulletin:(BBBulletin *)bulletin;
@@ -73,7 +71,7 @@ static ADAPProvider *sharedProvider;
 		if([known objectForKey:key]&&[[[known objectForKey:key]objectAtIndex:1]isEqualToString:val]){
 			continue;
 		}else{
-			pendingAlert=1;
+			pendingAlert=YES;
 			[pendingName release];
 			pendingName=[title retain];
 			[pendingBundle release];
@@ -131,6 +129,7 @@ static ADAPProvider *sharedProvider;
 	if(beep) bulletin.sound=[BBSound alertSoundWithSystemSoundID:beep];
 	beep=NULL;
 	BBDataProviderAddBulletin(self,bulletin);
+	pendingAlert=NO;
 }
 @end
 
