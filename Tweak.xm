@@ -55,6 +55,10 @@ static ADAPProvider *sharedProvider;
 	return self;
 }
 -(NSDictionary *)handleAptdate:(NSString *)name withInfo:(NSDictionary *)info{
+	[NSThread detachNewThreadSelector:@selector(_handleAptdate:) toTarget:self withObject:info];
+	return [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:1] forKey:@"status"];	
+}
+-(void)_handleAptdate:(NSDictionary *)info{
 	NSEnumerator *updates=[[info objectForKey:@"data"]objectEnumerator];
 	NSString *key;
 	NSString *title;
@@ -75,10 +79,10 @@ static ADAPProvider *sharedProvider;
 			pendingBundle=[key retain];
 			[pendingVersion release];
 			pendingVersion=[val retain];
-			if(!limitSB) ADAPShowPending();
-			if(!known) known=[[[NSMutableDictionary alloc]init]retain];
+			[self performSelectorOnMainThread:@selector(dataProviderDidLoad) withObject:nil waitUntilDone:NO];
+			if(!known)known=[[[NSMutableDictionary alloc]init]retain];
 			[known setObject:[NSArray arrayWithObjects:pendingName,pendingVersion,nil] forKey:pendingBundle];
-			NSMutableDictionary *prefs=[[NSMutableDictionary alloc]initWithContentsOfFile:prefpath];
+			NSMutableDictionary *prefs=[NSMutableDictionary dictionaryWithContentsOfFile:prefpath];
 			[prefs setObject:known forKey:@"Updates"];
 			[prefs writeToFile:prefpath atomically:YES];
 			[prefs release];
@@ -87,7 +91,6 @@ static ADAPProvider *sharedProvider;
 		[title release];
 		[val release];
 	}
-	return [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:1] forKey:@"status"];
 }
 -(void)dealloc{
 	sharedProvider=nil;
@@ -112,17 +115,11 @@ static ADAPProvider *sharedProvider;
 	return sectionInfo;
 }
 -(void)dataProviderDidLoad{
-	if(!pendingAlert) return;
+	if(!pendingAlert)return;
 	BBBulletinRequest *bulletin=[[BBBulletinRequest alloc]init];
 	bulletin.sectionID=@"com.saurik.Cydia";
 	bulletin.publisherBulletinID=@"ws.hbang.aptdate";
-	bulletin.recordID=bulletin.bulletinID=[NSString stringWithFormat:@"ws.hbang.aptdate.banner_for_%@_ver_%@",pendingBundle,pendingVersion];
-	#if DEBUG
-	NSDateFormatter *format=[[NSDateFormatter alloc]init];
-	[format setDateFormat:@"dmyhmsz"];
-	bulletin.recordID=bulletin.bulletinID=[bulletin.recordID stringByAppendingString:[format stringFromDate:[NSDate date]]];
-	[format release];
-	#endif
+	bulletin.recordID=bulletin.bulletinID=[NSString stringWithFormat:@"ws.hbang.aptdate.banner_for_%@_ver_%@_%i",pendingBundle,pendingVersion,[[NSDate date]timeIntervalSince1970]];
 	bulletin.title=alerttxt;
 	bulletin.message=[NSString stringWithFormat:alertmsg,pendingName];
 	bulletin.subtitle=[NSString stringWithFormat:alertver,pendingVersion];
@@ -151,34 +148,19 @@ static ADAPProvider *sharedProvider;
 		[[[UIAlertView alloc]initWithTitle:@"Thanks for installing Aptdate!" message:@"You will now receive banner notifications when there is an update available in Cydia.\nUse the Settings app to control how Aptdate works." delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil]show];
 		firstRun=NO;
 	}
-	if(pendingAlert) ADAPShowPending();
 }
 %end
 
-static void ADAPShowPending(){
-	if(pendingAlert){
-		if(enabled) [sharedProvider dataProviderDidLoad];
-		pendingAlert++;
-		if(pendingAlert>2){
-			[pendingName release];
-			[pendingBundle release];
-			[pendingVersion release];
-			pendingAlert=0;
-		}
-	}
-}
 static void ADAPPrefsLoad(){
 	if([[NSFileManager defaultManager]fileExistsAtPath:prefpath]){
 		NSDictionary *prefs=[[NSDictionary alloc]initWithContentsOfFile:prefpath];
 		if([prefs objectForKey:@"Enabled"]) enabled=[[prefs objectForKey:@"Enabled"]boolValue];
-		if([prefs objectForKey:@"SBOnly"]) limitSB=[[prefs objectForKey:@"SBOnly"]boolValue];
 		if([prefs objectForKey:@"Updates"]) known=[[prefs objectForKey:@"Updates"]retain];
 		[prefs release];
 	}else{
 		firstRun=YES;
 		[[[NSDictionary alloc]initWithObjectsAndKeys:
 			[NSNumber numberWithBool:YES],@"Enabled",
-			[NSNumber numberWithBool:NO],@"SBOnly",
 			[[NSDictionary alloc]init],@"Updates",
 			nil]writeToFile:prefpath atomically:YES];
 	}
