@@ -1,3 +1,6 @@
+## IMPORTANT
+**You really, really, really should not use this as a reference for anything. The code is terrible and will make you throw up. This also apparently does not work on iOS 6, and I no longer support it.**
+
 # Aptdate - banner notifications for Cydia package updates
 
 ## Internals
